@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": false,
+    "jsx": "react",
+    "baseUrl": "./src"
+  },
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+    "dist"
+  ],
+  "typeAcquisition": {
+    "include": [
+        "jest"
+    ]
+  }
+}

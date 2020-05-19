@@ -1,0 +1,55 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "jest": true,
+    "browser": true
+  },
+  "rules": {
+    "max-len": [0, 80],
+    "no-else-return": 0,
+    "no-confusing-arrow": 0,
+    "space-before-function-paren": 0,
+    "arrow-parens": 0,
+    "arrow-body-style": 0,
+    "indent": 0,
+    "func-names": 0,
+    "object-curly-newline": 0,
+    "function-paren-newline": 0,
+    "operator-linebreak": 0,
+    "no-throw-literal": 0,
+    "implicit-arrow-linebreak": 0,
+    "no-param-reassign": 0,
+    "no-nested-ternary": 0,
+    "no-plusplus": 0,
+    "no-continue": 0,
+    "max-classes-per-file": 0,
+    "no-restricted-syntax": 0,
+    "no-underscore-dangle": 0,
+    "prefer-promise-reject-errors": 0,
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": [
+      2,
+      { "peerDependencies": true, "devDependencies": false }
+    ],
+    "import/named": 2,
+    "react/jsx-filename-extension": 0,
+    "react/prop-types": 0,
+    "react/destructuring-assignment": 0,
+    "react/require-default-props": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "react/forbid-foreign-prop-types": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/forbid-prop-types": 0
+  },
+  "overrides": [
+    {
+      "files": ["packages/**/*.spec.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          2,
+          { "peerDependencies": false, "devDependencies": true }
+        ]
+      }
+    }
+  ]
+}
