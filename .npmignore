@@ -1,0 +1,10 @@
+**/*.spec.js
+*.tgz
+.babelrc
+webpack.config.js
+coverage
+.eslintrc
+.gitignore
+.prettierrc
+.travis.yml
+js.config
