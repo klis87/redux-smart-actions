@@ -7,4 +7,4 @@ coverage
 .gitignore
 .prettierrc
 .travis.yml
-js.config
+jsconfig.json
