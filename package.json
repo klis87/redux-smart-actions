@@ -1,7 +1,7 @@
 {
   "name": "redux-smart-actions",
   "version": "0.0.1",
-  "description": "Smart actions creator library",
+  "description": "Smart actions and thunks creator library",
   "main": "lib/index.js",
   "module": "es/index.js",
   "jsnext:main": "es/index.js",
@@ -11,7 +11,9 @@
   "license": "MIT",
   "typings": "types/index.d.ts",
   "keywords": [
-    "redux"
+    "redux",
+    "redux-thunk",
+    "redux-actions"
   ],
   "homepage": "https://github.com/klis87/redux-smart-actions",
   "bugs": {
@@ -22,11 +24,12 @@
     "lint": "eslint 'src/**'",
     "test": "jest src",
     "test:cover": "jest --coverage src",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "test-types": "tsc types/index.d.spec.ts --noEmit --lib es2015",
     "build:commonjs": "cross-env BABEL_ENV=test babel src --out-dir lib --ignore 'src/**/*.spec.js'",
     "build:es": "cross-env babel src --out-dir es --ignore 'src/**/*.spec.js'",
-    "build:umd": "webpack --mode development -o dist/redux-requests-graphql.js",
-    "build:umd:min": "webpack --mode production -o dist/redux-requests-graphql.min.js",
+    "build:umd": "webpack --mode development -o dist/redux-smart-actions.js",
+    "build:umd:min": "webpack --mode production -o dist/redux-smart-actions.min.js",
     "build": "npm-run-all clean -p build:commonjs build:es build:umd build:umd:min",
     "build:watch": "nodemon --watch src --ignore src/**/*.spec.js --exec 'yarn run build:es'",
     "prepublish": "yarn run build"
@@ -38,6 +41,7 @@
     "@types/jest": "25.2.3",
     "babel-jest": "25.1.0",
     "babel-loader": "8.1.0",
+    "coveralls": "3.0.9",
     "cross-env": "7.0.1",
     "eslint": "6.8.0",
     "eslint-config-airbnb": "18.0.1",
