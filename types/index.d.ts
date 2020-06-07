@@ -1,15 +1,15 @@
-export function createAction<Output = {}, Input = {}>(
+export function createAction<Output = {}, Input extends any[] = any>(
   name: string,
-  action?: (...input: Input) => Output,
-): (...input: Input) => Output & { type: string };
+  action?: (...params: Input) => Output,
+): (...params: Input) => Output & { type: string };
 
-export function createThunk<Output = {}, Input = {}>(
+export function createThunk<Output = {}, Input extends any[] = any>(
   name: string,
   thunk?: (
-    ...input: Input
+    ...params: Input
   ) => (dispatch: (action: any) => any, getState: () => any) => Output,
 ): (
-  ...input: Input
+  ...params: Input
 ) => (
   dispatch: (action: any) => any,
   getState: () => any,
