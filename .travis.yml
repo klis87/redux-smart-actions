@@ -6,7 +6,7 @@ script:
   - yarn run lint
   - yarn run test:cover
   - yarn run test-types
-  # - yarn run bundlesize
+  - yarn run bundlesize
 after_success: yarn run coveralls
 cache: yarn
 
