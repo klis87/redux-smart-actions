@@ -1,6 +1,6 @@
 {
   "name": "redux-smart-actions",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Redux addon to create actions and thunks with minimum boilerplate",
   "main": "lib/index.js",
   "module": "es/index.js",
