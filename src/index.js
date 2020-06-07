@@ -1,1 +1,2 @@
-console.log('redux smart actions');
+export { createAction } from './create-action';
+export { createThunk } from './create-thunk';
