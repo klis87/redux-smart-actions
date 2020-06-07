@@ -88,7 +88,7 @@ const doSth = createThunk('DO_STH', () => (dispatch, getState) => {
 })
 ```
 
-So what changed? `doSth.toString === 'DO_STH'`, so you can use `doSth` in reducers directly,
+So what changed? `doSth.toString() === 'DO_STH'`, so you can use `doSth` in reducers directly,
 like constants didn't even exist. Also notice that we do not dispatch `{ x: state.x }` action,
 we return it, `createThunk` will add `type` for us and dispatch it automatically.
 
