@@ -1,0 +1,24 @@
+{
+  "name": "babel-plugin-redux-smart-actions",
+  "version": "0.1.1",
+  "description": "Babel plugin for redux-smart-actions to reduce boilerplate even more",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "jsnext:main": "src/index.js",
+  "repository": "git@github.com:klis87/redux-smart-actions.git",
+  "author": "Konrad Lisiczynski <klisiczynski@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "redux",
+    "actions",
+    "thunks",
+    "redux-actions",
+    "redux-thunk",
+    "babel",
+    "babel-plugin"
+  ],
+  "homepage": "https://github.com/klis87/redux-smart-actions",
+  "bugs": {
+    "url": "https://github.com/klis87/redux-smart-actions/issues"
+  }
+}
