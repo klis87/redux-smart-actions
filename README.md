@@ -14,20 +14,21 @@ Redux addon to create actions and thunks with minimum boilerplate
 Why yet another Redux action creation library? Because:
 - writing Redux actions without any addon requires writing constants which is very verbose and error-prone
 - other addons often force conventions about action structure
+- other addons still require to pass strings as first argument to define action type - here you won't have to with optional Babel plugin
 - some addons solve problem with unique types aucomatically, but then they are not determenistic (TODO)
 - this library also provides thunks creators - you can create thunk like normal action and also forget about types
 
 ## Installation
 
 To install the package, just run:
-```
+```bash
 $ npm install redux-smart-actions
 ```
 or you can just use CDN: `https://unpkg.com/redux-smart-actions`.
 
 ## Usage
 
-### createAction
+### `createAction`
 
 Let's say you have an action written without any addon:
 ```js
@@ -58,7 +59,7 @@ const doSth = createAction('DO_STH', x => ({ x }));
 Basically 2nd argument is an action creator, you write it like usually, just you don't
 need to worry about `type`.
 
-### createThunk
+### `createThunk`
 
 If you happen to use `redux-thunk`, you might like using `createThunk` from this library.
 Often you need to use thunks which looks very similar to normal actions, but they need to
@@ -92,6 +93,54 @@ So what changed? `doSth.toString() === 'DO_STH'`, so you can use `doSth` in redu
 like constants didn't even exist. Also notice that we do not dispatch `{ x: state.x }` action,
 we return it, `createThunk` will add `type` for us and dispatch it automatically.
 
+## Babel plugin
+
+This plugin it totally optional, but very recommended. With just no work you will be able
+to omit first arguments (action types) for both `createAction` and `createThunk` -
+they will be taken from action name automatically!
+
+To install it, just run:
+```bash
+npm install --save-dev babel-plugin-redux-smart-action
+```
+
+and add it to babel plugins, for example in `.babelrc`:
+```json
+{
+  "plugins": [
+    "redux-smart-actions"
+  ]
+}
+```
+
+Then, you could use new functions from this library.
+
+### `createSmartAction`
+
+```js
+import { createSmartAction } from 'redux-smart-actions';
+
+const doSth = createSmartAction();
+
+const doSthElse = createSmartAction(x => ({ x }));
+```
+
+which would be the same as:
+```js
+import { createAction } from 'redux-smart-actions';
+
+const doSth = createAction('doSth');
+
+const doSthElse = createAction('doSthElse', x => ({ x }));
+```
+
+which saves you any need to pass action type strings manually.
+
+### `createSmartThunk`
+
+The cousin of `createSmartAction`, the usage is the same, just use `createSmartThunk`
+instead of `createThunk` and omit the first string argument - it will be again
+interpolated from variable name you attach thunk to.
 
 ## Licence
 
