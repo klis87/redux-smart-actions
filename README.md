@@ -15,7 +15,8 @@ Why yet another Redux action creation library? Because:
 - writing Redux actions without any addon requires writing constants which is very verbose and error-prone
 - other addons often force conventions about action structure
 - other addons still require to pass strings as first argument to define action type - here you won't have to with optional Babel plugin
-- some addons solve problem with unique types aucomatically, but then they are not determenistic (TODO)
+- some addons solve problem with unique types automatically, but then they are not determenistic, this library
+allows to prefix all action types with file paths, providing safe and deterministic uniqueness
 - this library also provides thunks creators - you can create thunk like normal action and also forget about types
 
 ## Installation
@@ -93,6 +94,33 @@ So what changed? `doSth.toString() === 'DO_STH'`, so you can use `doSth` in redu
 like constants didn't even exist. Also notice that we do not dispatch `{ x: state.x }` action,
 we return it, `createThunk` will add `type` for us and dispatch it automatically.
 
+Of course, it is possible to pass arguments like in `createAction`, for example:
+```js
+import { createThunk } from 'redux-smart-actions';
+
+const doSth = createThunk('DO_STH', x => (dispatch, getState) => {
+  const state = getState();
+  return { x, y: state.y };
+  // then doSth(1) would dispatch { type: 'DO_STH', x: 1, y: state.y }
+})
+```
+
+
+Also, it is possible not to dispatch anything by returning `null` in passed thunk:
+```js
+import { createThunk } from 'redux-smart-actions';
+
+const maybeDispatch = createThunk('MAYBE_DISPATCH', () => (dispatch, getState) => {
+  const state = getState();
+
+  if (shouldWeDispatch(state)) {
+    return {}; // will dispatch { type: MAYBE_DISPATCH }
+  }
+
+  return null; // won't dispatch anything
+})
+```
+
 ## Babel plugin
 
 This plugin it totally optional, but very recommended. With just no work you will be able
@@ -129,9 +157,9 @@ which would be the same as:
 ```js
 import { createAction } from 'redux-smart-actions';
 
-const doSth = createAction('doSth');
+const doSth = createAction('DO_STH');
 
-const doSthElse = createAction('doSthElse', x => ({ x }));
+const doSthElse = createAction('DO_STH_ELSE', x => ({ x }));
 ```
 
 which saves you any need to pass action type strings manually.
@@ -141,6 +169,35 @@ which saves you any need to pass action type strings manually.
 The cousin of `createSmartAction`, the usage is the same, just use `createSmartThunk`
 instead of `createThunk` and omit the first string argument - it will be again
 interpolated from variable name you attach thunk to.
+
+### Plugin options
+
+It is possible to pass several options:
+```json
+{
+  "plugins": [
+    [
+      "redux-smart-actions",
+      {
+        "transformTypes": false,
+        "prefixTypes": true,
+        "basePath": "src/"
+      }
+    ]
+  ]
+}
+```
+
+Here you can find explanation for these options:
+- `transformTypes`: `true` by default, when `true` it transforms types to `THIS_FORM`, which
+is how people write types manually most often, so for example `doSth` will become `DO_STH`
+- `prefixTypes`: `false` by default, it prefixes all types with file paths, which guarantees uniqueness and
+prevents any collisions, for example `doSth` with path `/src/stores` would become
+`/src/stores/doSth`, or `/SRC/STORES/DO_STH` if `transformTypes` is `true`
+- `basePath`: `null` by default, it is useful to define if `prefixTypes` is `true`,
+because if not passed absolute paths for type prefixes will be used, which could be long
+and could vary between environments, for example if your all actions are in directory
+`/projects/my-project/src/stores`, you could pass `basePath: src/stores/`
 
 ## Licence
 
