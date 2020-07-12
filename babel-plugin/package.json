@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-redux-smart-actions",
-  "version": "0.1.1",
+  "version": "0.3.0",
   "description": "Babel plugin for redux-smart-actions to reduce boilerplate even more",
   "main": "src/index.js",
   "module": "src/index.js",

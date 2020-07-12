@@ -7,7 +7,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/klis87/redux-smart-actions/badge.svg)](https://snyk.io/test/github/klis87/redux-smart-actions)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-Redux addon to create actions and thunks with minimum boilerplate
+The fastest way to write Redux actions
 
 ## Motivation
 

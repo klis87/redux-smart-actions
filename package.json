@@ -1,7 +1,7 @@
 {
   "name": "redux-smart-actions",
-  "version": "0.2.0",
-  "description": "Redux addon to create actions and thunks with minimum boilerplate",
+  "version": "0.3.0",
+  "description": "The fastest way to write Redux actions",
   "main": "lib/index.js",
   "module": "es/index.js",
   "jsnext:main": "es/index.js",
