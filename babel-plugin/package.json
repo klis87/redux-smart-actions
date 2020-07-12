@@ -20,5 +20,8 @@
   "homepage": "https://github.com/klis87/redux-smart-actions",
   "bugs": {
     "url": "https://github.com/klis87/redux-smart-actions/issues"
+  },
+  "dependencies": {
+    "lodash": "4.17.19"
   }
 }
