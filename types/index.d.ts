@@ -7,12 +7,17 @@ export function createThunk<Output = {}, Input extends any[] = any>(
   name: string,
   thunk: (
     ...params: Input
-  ) => (dispatch: (action: any) => any, getState: () => any) => Output,
+  ) => (
+    dispatch: (action: any) => any,
+    getState: () => any,
+    extraArguments: any,
+  ) => Output,
 ): (
   ...params: Input
 ) => (
   dispatch: (action: any) => any,
   getState: () => any,
+  extraArguments: any,
 ) => Output & { type: string };
 
 export function createSmartAction<Output = {}, Input extends any[] = any>(
@@ -22,10 +27,15 @@ export function createSmartAction<Output = {}, Input extends any[] = any>(
 export function createSmartThunk<Output = {}, Input extends any[] = any>(
   thunk: (
     ...params: Input
-  ) => (dispatch: (action: any) => any, getState: () => any) => Output,
+  ) => (
+    dispatch: (action: any) => any,
+    getState: () => any,
+    extraArguments: any,
+  ) => Output,
 ): (
   ...params: Input
 ) => (
   dispatch: (action: any) => any,
   getState: () => any,
+  extraArguments: any,
 ) => Output & { type: string };

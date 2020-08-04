@@ -46,4 +46,19 @@ describe('createThunk', () => {
     store.dispatch(thunkCreator());
     expect(store.getActions()).toEqual([]);
   });
+
+  it('is compatible with thunk extra arguments', () => {
+    const mockStore = configureStore([
+      thunkMiddleware.withExtraArgument('test'),
+    ]);
+    const store = mockStore({});
+    const thunkCreator = createThunk(
+      'NAME',
+      () => (dispatch, getState, test) => {
+        return { test };
+      },
+    );
+    store.dispatch(thunkCreator());
+    expect(store.getActions()).toEqual([{ type: 'NAME', test: 'test' }]);
+  });
 });

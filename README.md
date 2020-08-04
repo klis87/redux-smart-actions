@@ -69,7 +69,7 @@ than passing as param to action).
 
 But what about constants? This is the main benefit of `create-thunk`. Imagine a thunk like that:
 ```js
-const doSth = () => (dispatch, getState) => {
+const doSth = () => (dispatch, getState, extraArguments) => {
   const state = getState();
   dispatch({ type: 'EXTRA_ACTION' });
   return dispatch({ type: 'DO_STH', x: state.x });
@@ -83,7 +83,7 @@ import { createAction, createThunk } from 'redux-smart-actions';
 
 const extraAction = createAction('EXTRA_ACTION');
 
-const doSth = createThunk('DO_STH', () => (dispatch, getState) => {
+const doSth = createThunk('DO_STH', () => (dispatch, getState, extraArguments) => {
   const state = getState();
   dispatch(extraAction());
   return { x: state.x };
