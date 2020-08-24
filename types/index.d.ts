@@ -1,3 +1,5 @@
+import { Reducer, AnyAction } from 'redux';
+
 export function createAction<Output = {}, Input extends any[] = any>(
   name: string,
   action?: (...params: Input) => Output,
@@ -39,3 +41,14 @@ export function createSmartThunk<Output = {}, Input extends any[] = any>(
   getState: () => any,
   extraArguments: any,
 ) => Output & { type: string };
+
+export function joinTypes(...types: string[]): string;
+
+interface Handlers<S> {
+  [type: string]: (state: S, action: AnyAction) => S;
+}
+
+export function createReducer<S = any>(
+  handlers: Handlers<S>,
+  defaultState: S,
+): Reducer<S>;

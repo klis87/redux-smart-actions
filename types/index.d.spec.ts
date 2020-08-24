@@ -1,4 +1,4 @@
-import { createAction, createThunk } from '.';
+import { createAction, createThunk, createReducer, joinTypes } from '.';
 
 const doSth = createAction('DO_STH');
 const doSthAction = doSth();
@@ -22,3 +22,13 @@ const doSthWithExtraDispatch = createThunk(
 );
 
 const doSthWithExtraDispatchThunk = doSthWithExtraDispatch(1);
+
+const reducer = createReducer<number>(
+  {
+    INCREMENT: (state, action) => state + action.value,
+    DECREMENT: (state, action) => state - action.value,
+    [doSthWithExtraDispatchThunk.toString()]: state => state,
+    [joinTypes('TYPE1', doSthElse.toString())]: state => state,
+  },
+  0,
+);

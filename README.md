@@ -137,6 +137,65 @@ const maybeDispatch = createThunk(
 );
 ```
 
+### `createReducer`
+
+This library provides also a reducer helper. You might like it if you don't want to use switch statements.
+You use it like that:
+
+```js
+import { createReducer } from 'redux-smart-actions';
+
+const defaultState = 0;
+
+const reducer = createReducer(
+  {
+    INCREMENT: (state, action) => state + action.value,
+    DECREMENT: (state, action) => state - action.value,
+  },
+  defaultState,
+);
+```
+
+You probably don't use constants though, but rather `createAction` and `createThunk`.
+You can pass them instead of constants as computed properties like that:
+
+```js
+import { createReducer, createAction } from 'redux-smart-actions';
+
+const increment = createAction('INCREMENT', value => ({ value }));
+const decrement = createAction('DECREMENT', value => ({ value }));
+
+const defaultState = 0;
+
+const reducer = createReducer(
+  {
+    [increment]: (state, action) => state + action.value,
+    [decrement]: (state, action) => state - action.value,
+  },
+  defaultState,
+);
+```
+
+It is also possible to handle multiple types by one handler, for instance:
+
+```js
+import { createReducer, createAction, joinTypes } from 'redux-smart-actions';
+
+const doSth = createAction('DO_STH', value => ({ value }));
+const doSthElse = createAction('DO_STH_ELSE', value => ({ value }));
+
+const defaultState = 0;
+
+const reducer = createReducer(
+  {
+    [joinTypes(doSth, doSthElse)]: (state, action) => state + action.value,
+  },
+  defaultState,
+);
+```
+
+which is more convenient than passing the same handler to multiple types.
+
 ## Babel plugin
 
 This plugin it totally optional, but very recommended. With just no work you will be able
