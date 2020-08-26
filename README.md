@@ -205,7 +205,7 @@ they will be taken from action name automatically!
 To install it, just run:
 
 ```bash
-npm install --save-dev babel-plugin-redux-smart-action
+npm install --save-dev babel-plugin-redux-smart-actions
 ```
 
 and add it to babel plugins, for example in `.babelrc`:
