@@ -35,12 +35,13 @@
   },
   "overrides": [
     {
-      "files": ["src/**/*.spec.js"],
+      "files": ["src/**/*.spec.js", "babel-plugin/src/**/*.js"],
       "rules": {
         "import/no-extraneous-dependencies": [
           2,
           { "peerDependencies": false, "devDependencies": true }
-        ]
+        ],
+        "quotes": 0
       }
     }
   ]

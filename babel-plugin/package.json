@@ -22,6 +22,16 @@
     "url": "https://github.com/klis87/redux-smart-actions/issues"
   },
   "dependencies": {
+    "@types/jest": "26.0.10",
     "lodash": "4.17.19"
+  },
+  "devDependencies": {
+    "@babel/core": "7.11.4",
+    "@babel/helper-plugin-utils": "7.10.4",
+    "jest": "26.4.2"
+  },
+  "scripts": {
+    "test": "jest src",
+    "test:cover": "jest --coverage src"
   }
 }
