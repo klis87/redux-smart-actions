@@ -1,6 +1,6 @@
 {
   "name": "redux-smart-actions",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "The fastest way to write Redux actions",
   "main": "lib/index.js",
   "module": "es/index.js",
