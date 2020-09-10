@@ -70,7 +70,7 @@ need to worry about `type`.
 ### `createThunk`
 
 If you happen to use `redux-thunk`, you might like using `createThunk` from this library.
-Often you need to use thunks which looks very similar to normal actions, but they need to
+Often you need to use thunks which look very similar to normal actions, but they need to
 dispatch an extra action or need an access to Redux state directly (which is often more convenient
 than passing as param to action).
 
