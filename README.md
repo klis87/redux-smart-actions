@@ -19,6 +19,7 @@ Why yet another Redux action creation library? Because:
 - some addons solve problem with unique types automatically, but then they are not determenistic, this library
   allows to prefix all action types with file paths, providing safe and deterministic uniqueness
 - this library also provides thunks creators - you can create thunk like normal action and also forget about types
+- thanks to Typescript generics, using helpers from this library will still give you proper autocomplete functionality for your actions in a text editor like Visual Studio Code, even when not using Typescript!
 
 ## Installation
 
