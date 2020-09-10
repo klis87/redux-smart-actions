@@ -8,4 +8,3 @@ coverage
 .prettierrc
 .travis.yml
 jsconfig.json
-babel-plugin
