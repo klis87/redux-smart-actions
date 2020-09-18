@@ -11,7 +11,56 @@ The fastest way to write Redux actions
 
 ## Motivation
 
-Why yet another Redux action creation library? Because:
+Why yet another Redux action creation library?
+
+Long story short, because with its help you could refactor a code in the following way:
+
+```diff
++ import { createSmartAction, createSmartThunk, createReducer, joinTypes } from 'redux-smart-actions';
+- const RESET_VALUE = 'RESET_VALUE';
+- const SET_VALUE = 'SET_VALUE';
+- const INCREMENT_IF_POSITIVE = 'INCREMENT_IF_POSITIVE';
+-
+- const resetValue = () => ({ type: RESET_VALUE });
++ const resetValue = createSmartAction();
+
+- const setValue = value => ({ type: SET_VALUE, value });
++ const setValue = createSmartAction(value => ({ value }));
+
+- const incrementIfPositive = () => (dispatch, getState) => {
++ const incrementIfPositive = createSmartThunk(() => (dispatch, getState) => {
+    const currentValue = getState().value;
+
+    if (currentValue <= 0) {
+      return null;
+    }
+
+-   return dispatch({
+-     type: INCREMENT_IF_POSITIVE,
+-     value: currentValue + 1,
+-   });
++   return { value: currentValue + 1 });
+- };
++ });
+
+- const valueReducer = (state = 0, action) => {
+-   switch (action.type) {
+-     case RESET_VALUE:
+-       return 0;
+-     case SET_VALUE:
+-     case INCREMENT_IF_POSITIVE:
+-       return action.value;
+-     default:
+-       return state;
+-   }
+- }
++ const valueReducer = createReducer({
++   [resetValue]: () => 0,
++   [joinTypes(setValue, incrementIfPositive)]: (state, action) => action.value;
++ }, 0);
+```
+
+Or, to express it verbally:
 
 - writing Redux actions without any addon requires writing constants which is very verbose and error-prone
 - other addons often force conventions about action structure
@@ -38,7 +87,7 @@ or you can just use CDN: `https://unpkg.com/redux-smart-actions`.
 Let's say you have an action written without any addon:
 
 ```js
-const doSth = () => ({ type: 'DO_STH' });
+const doSomething = () => ({ type: 'DO_SOMETHING' });
 ```
 
 With `createAction`, you could convert it like that:
@@ -46,23 +95,23 @@ With `createAction`, you could convert it like that:
 ```js
 import { createAction } from 'redux-smart-actions';
 
-const doSth = createAction('DO_STH');
+const doSomething = createAction('DO_SOMETHING');
 ```
 
-This looks similar, but there is one big benefit - `doSth.toString() === 'DO_STH'`,
-so `doSth` can be used as action creator like normally, but also in reducers or any other places
+This looks similar, but there is one big benefit - `doSomething.toString() === 'DO_SOMETHING'`,
+so `doSomething` can be used as action creator like normally, but also in reducers or any other places
 where you need action types.
 
 What about actions with arguments like that?
 
 ```js
-const doSth = x => ({ type: 'DO_STH', x });
+const doSomething = x => ({ type: 'DO_SOMETHING', x });
 ```
 
 Easy, just use 2nd argument:
 
 ```js
-const doSth = createAction('DO_STH', x => ({ x }));
+const doSomething = createAction('DO_SOMETHING', x => ({ x }));
 ```
 
 Basically 2nd argument is an action creator, you write it like usually, just you don't
@@ -78,10 +127,10 @@ than passing as param to action).
 But what about constants? This is the main benefit of `create-thunk`. Imagine a thunk like that:
 
 ```js
-const doSth = () => (dispatch, getState, extraArguments) => {
+const doSomething = () => (dispatch, getState, extraArguments) => {
   const state = getState();
   dispatch({ type: 'EXTRA_ACTION' });
-  return dispatch({ type: 'DO_STH', x: state.x });
+  return dispatch({ type: 'DO_SOMETHING', x: state.x });
 };
 ```
 
@@ -93,8 +142,8 @@ import { createAction, createThunk } from 'redux-smart-actions';
 
 const extraAction = createAction('EXTRA_ACTION');
 
-const doSth = createThunk(
-  'DO_STH',
+const doSomething = createThunk(
+  'DO_SOMETHING',
   () => (dispatch, getState, extraArguments) => {
     const state = getState();
     dispatch(extraAction());
@@ -103,7 +152,7 @@ const doSth = createThunk(
 );
 ```
 
-So what changed? `doSth.toString() === 'DO_STH'`, so you can use `doSth` in reducers directly,
+So what changed? `doSomething.toString() === 'DO_SOMETHING'`, so you can use `doSomething` in reducers directly,
 like constants didn't even exist. Also notice that we do not dispatch `{ x: state.x }` action,
 we return it, `createThunk` will add `type` for us and dispatch it automatically.
 
@@ -112,10 +161,10 @@ Of course, it is possible to pass arguments like in `createAction`, for example:
 ```js
 import { createThunk } from 'redux-smart-actions';
 
-const doSth = createThunk('DO_STH', x => (dispatch, getState) => {
+const doSomething = createThunk('DO_SOMETHING', x => (dispatch, getState) => {
   const state = getState();
   return { x, y: state.y };
-  // then doSth(1) would dispatch { type: 'DO_STH', x: 1, y: state.y }
+  // then doSomething(1) would dispatch { type: 'DO_SOMETHING', x: 1, y: state.y }
 });
 ```
 
@@ -182,14 +231,15 @@ It is also possible to handle multiple types by one handler, for instance:
 ```js
 import { createReducer, createAction, joinTypes } from 'redux-smart-actions';
 
-const doSth = createAction('DO_STH', value => ({ value }));
-const doSthElse = createAction('DO_STH_ELSE', value => ({ value }));
+const doSomething = createAction('DO_SOMETHING', value => ({ value }));
+const doSomethingElse = createAction('DO_SOMETHING_ELSE', value => ({ value }));
 
 const defaultState = 0;
 
 const reducer = createReducer(
   {
-    [joinTypes(doSth, doSthElse)]: (state, action) => state + action.value,
+    [joinTypes(doSomething, doSomethingElse)]: (state, action) =>
+      state + action.value,
   },
   defaultState,
 );
@@ -224,9 +274,9 @@ Then, you could use new functions from this library.
 ```js
 import { createSmartAction } from 'redux-smart-actions';
 
-const doSth = createSmartAction();
+const doSomething = createSmartAction();
 
-const doSthElse = createSmartAction(x => ({ x }));
+const doSomethingElse = createSmartAction(x => ({ x }));
 ```
 
 which would be the same as:
@@ -234,9 +284,9 @@ which would be the same as:
 ```js
 import { createAction } from 'redux-smart-actions';
 
-const doSth = createAction('DO_STH');
+const doSomething = createAction('DO_SOMETHING');
 
-const doSthElse = createAction('DO_STH_ELSE', x => ({ x }));
+const doSomethingElse = createAction('DO_SOMETHING_ELSE', x => ({ x }));
 ```
 
 which saves you any need to pass action type strings manually.
